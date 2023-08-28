@@ -4,10 +4,10 @@
 
 A Vue3 App, Performing Typescript Usages with :
 
-- Typescript Usages for Data Types (e.g Number, String, Object, Array, etc)
+- Typescript Usages with Data Types (e.g Number, String, Object, Array, etc)
 - API Integrations
 - Pinia (State Management) Usage
-- Inside Component Essentials (e.g Computed, Ref, DefineProps, DefineEmits, Watch, etc)
+- Component Essentials TS Integrations (e.g Computed, Ref, DefineProps, DefineEmits, Watch, etc)
 - Vuetify
 
 ---
