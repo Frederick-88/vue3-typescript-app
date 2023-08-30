@@ -10,5 +10,9 @@ main.app
 .app {
   min-height: 100vh;
   padding: 80px;
+
+  @media screen and (max-width: 600px) {
+    padding: 30px;
+  }
 }
 </style>
