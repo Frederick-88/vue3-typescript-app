@@ -1,12 +1,22 @@
 <script setup lang="ts">
-import { useGeneralStore } from "@/stores/general";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { type ITodoObj } from "@/types/index";
+
+import { useGeneralStore } from "@/stores/general";
+import Modal from "@/components/children/Modal.vue";
 
 const generalStore = useGeneralStore();
 
-const getTodoById = (id: number) => {
-  generalStore.getTodoById(id);
+const isShowModal = ref(false);
+
+const getTodoById = async (id: number) => {
+  await generalStore.getTodoById(id);
+  isShowModal.value = true;
+};
+
+const hideModal = () => {
+  generalStore.removeSelectedTodo();
+  isShowModal.value = false;
 };
 
 onMounted(() => {
@@ -16,11 +26,15 @@ onMounted(() => {
 
 <template>
   <div class="composition-api-v2__container">
-    <div class="todo-box__list v-row">
+    <span v-if="generalStore.isLoading" class="loader-text">Loading ...</span>
+    <div v-else class="todo-box__list v-row">
       <VCol
         v-for="(item, index) in generalStore.todoList"
         :key="index"
-        cols="4"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
         class="pa-3"
       >
         <VCard class="todo-box">
@@ -31,11 +45,7 @@ onMounted(() => {
           />
 
           <VCardTitle>Todo Title: {{ item.title }}</VCardTitle>
-          <VCardSubtitle
-            >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna
-            aliqua.</VCardSubtitle
-          >
+          <VCardSubtitle>{{ item.description }}</VCardSubtitle>
           <VCardSubtitle class="mt-6 font-weight-medium"
             >Status:
             {{ item.completed ? "Completed" : "Not Completed" }}</VCardSubtitle
@@ -52,6 +62,8 @@ onMounted(() => {
         </VCard>
       </VCol>
     </div>
+
+    <Modal :is-show="isShowModal" @close="hideModal" />
   </div>
 </template>
 
