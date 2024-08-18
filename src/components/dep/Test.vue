@@ -12,42 +12,48 @@ let person: { name: string; age: number; working: boolean } = {
 };
 
 // ---
-export interface Props {
-  isShow: boolean;
-  selectedTodo: ITodoObj;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  isShow: false,
-  selectedTodo: () => {
-    return {
-      userId: -1,
-      id: -1,
-      title: "",
-      description: "",
-      completed: false,
-    };
+const props = defineProps({
+  selectedTodo: {
+    type: Object as PropType<ITodoObj>,
+    default: () => {},
+  },
+  isShow: {
+    type: Boolean,
+    default: false,
   },
 });
 
+const emit = defineEmits<{
+  close: [];
+  // click: [value: string]; >> if has value passed
+}>();
+
 // --- Optional Props Definition
-// const props = defineProps({
-//   selectedTodo: {
-//     type: Object as PropType<ITodoObj>,
-//     default: () => {},
-//   },
-//   isShow: {
-//     type: Boolean,
-//     default: false,
+// export interface Props {
+//   isShow: boolean;
+//   selectedTodo: ITodoObj;
+// }
+
+// const props = withDefaults(defineProps<Props>(), {
+//   isShow: false,
+//   selectedTodo: () => {
+//     return {
+//       userId: -1,
+//       id: -1,
+//       title: "",
+//       description: "",
+//       completed: false,
+//     };
 //   },
 // });
 // ---
 
-const emit = defineEmits<{
-  // --- note: "?" so it become okay if we dont pass any value
-  // (e: "click", event: Event): void;
-  (event: "click", value?: string): void;
-}>();
+// --- Optional Emit Definition
+// const emit = defineEmits<{
+//   // --- note: "?" so it become okay if we dont pass any value + void (default from Vue3 docs)
+//   // (e: "click", event: Event): void; >>> if we pass Event object
+//   (event: "click", value?: string): void;
+// }>();
 
 // ---
 const name = ref("Link");

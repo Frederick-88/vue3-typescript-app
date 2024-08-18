@@ -4,15 +4,15 @@ import { useGeneralStore } from "@/stores/general";
 
 const generalStore = useGeneralStore();
 
-export interface Props {
-  isShow: boolean;
-}
-const props = withDefaults(defineProps<Props>(), {
-  isShow: false,
+const props = defineProps({
+  isShow: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits<{
-  (event: "close"): void;
+  close: [];
 }>();
 
 const modalModel = computed({
